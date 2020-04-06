@@ -1,3 +1,7 @@
+var secsElement = document.querySelector("#secs");
+var startButton = document.querySelector("#start-quiz");
+var timerSpan = document.createElement("span");
+
 var questions = [
   {
     question: "Inside which HTML element do we put the JavaScript?",
@@ -38,5 +42,21 @@ var questions = [
     answer: 0,
   },
 ];
+
+var secondsLeft = 60;
+
+function startCountdown() {
+  var timerInterval = setInterval(function () {
+    secondsLeft--;
+    secsElement.textContent = secondsLeft;
+    console.log(secondsLeft);
+
+    if (secondsLeft === 0) {
+      clearInterval(timerInterval);
+    }
+  }, 1000);
+}
+
+startButton.addEventListener("click", startCountdown);
 
 questions.forEach((question) => console.log(question));

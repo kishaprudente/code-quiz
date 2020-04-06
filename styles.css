@@ -19,6 +19,14 @@ h4 {
   margin: 50px;
 }
 
+button {
+  padding: 10px;
+  border-radius: 4px;
+  font-size: medium;
+  background-color: purple;
+  color: white;
+}
+
 #highscore-views {
   float: left;
 }
