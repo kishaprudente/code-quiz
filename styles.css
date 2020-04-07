@@ -15,7 +15,8 @@ header {
 }
 
 main,
-h4 {
+p,
+ul {
   margin: 50px;
 }
 
@@ -25,6 +26,10 @@ button {
   font-size: medium;
   background-color: purple;
   color: white;
+}
+
+ul {
+  list-style: none;
 }
 
 #highscore-views {
