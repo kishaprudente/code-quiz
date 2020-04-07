@@ -49,14 +49,14 @@ var questions = [
 
 var secondsLeft;
 var message = "Coding Quiz Challenge";
-var score;
+var score = 0;
 
 init();
 
 function init() {
   secondsLeft = 60;
   messageElement.innerHTML = message;
-  var score = 0;
+  //   var score = 0;
 }
 
 function startQuiz() {
@@ -79,8 +79,8 @@ function renderQuestions(questionNumber) {
   var questionItem = questions[questionNumber];
   messageElement.textContent = questionItem.question;
 
-  var newDiv = document.createElement("div");
-  choicesListElement.appendChild(newDiv);
+  var newChoices = document.createElement("div");
+  choicesListElement.appendChild(newChoices);
 
   for (var j = 0; j < questionItem.choices.length; j++) {
     var choice = questionItem.choices[j];
@@ -88,7 +88,7 @@ function renderQuestions(questionNumber) {
     var li = document.createElement("li");
     li.setAttribute("data-index", j);
     li.textContent = choice;
-    newDiv.appendChild(li);
+    newChoices.appendChild(li);
 
     li.addEventListener("click", function (event) {
       console.log(questionItem.answer);
@@ -98,22 +98,22 @@ function renderQuestions(questionNumber) {
         parseInt(event.target.getAttribute("data-index"))
       ) {
         score++;
+        console.log(score);
         console.log("correct");
       } else {
         secondsLeft -= 15;
         console.log("wrong answer");
       }
       questionNumber++;
-      newDiv.remove();
+      newChoices.remove();
 
-      //   if (questionNumber === questions.length) {
-
-      //   }
-      renderQuestions(questionNumber);
+      if (questionNumber === questions.length) {
+        messageElement.textContent = "Quiz is over! Your score is " + score;
+      } else {
+        renderQuestions(questionNumber);
+      }
     });
   }
 }
-
-function getScore() {}
 
 startButton.addEventListener("click", startQuiz);
