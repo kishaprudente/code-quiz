@@ -4,7 +4,10 @@ var messageElement = document.querySelector("h1");
 var mainElement = document.querySelector("#main-content");
 var textElement = document.querySelector("p");
 var choicesListElement = document.querySelector("#choices-list");
-var timerSpan = document.createElement("span");
+var indicatorElement = document.querySelector("#indicator");
+var formElement = document.createElement("div");
+var textInputElement = document.createElement("input");
+var formButton = document.createElement("button");
 
 var questions = [
   {
@@ -48,21 +51,22 @@ var questions = [
 ];
 
 var secondsLeft;
+var timerInterval;
 var message = "Coding Quiz Challenge";
-var score = 0;
+var score;
 
 init();
 
 function init() {
   secondsLeft = 60;
   messageElement.innerHTML = message;
-  //   var score = 0;
+  score = 0;
 }
 
 function startQuiz() {
   textElement.remove();
   startButton.remove();
-  var timerInterval = setInterval(function () {
+  timerInterval = setInterval(function () {
     secondsLeft--;
     secsElement.textContent = secondsLeft;
 
@@ -91,29 +95,39 @@ function renderQuestions(questionNumber) {
     newChoices.appendChild(li);
 
     li.addEventListener("click", function (event) {
-      console.log(questionItem.answer);
-      console.log(event.target.getAttribute("data-index"));
       if (
         questionItem.answer ===
         parseInt(event.target.getAttribute("data-index"))
       ) {
-        score++;
-        console.log(score);
+        score += 10;
         console.log("correct");
       } else {
-        secondsLeft -= 15;
-        console.log("wrong answer");
+        secondsLeft -= 5;
+        console.log("wrong");
       }
       questionNumber++;
       newChoices.remove();
 
       if (questionNumber === questions.length) {
-        messageElement.textContent = "Quiz is over! Your score is " + score;
+        clearInterval(timerInterval);
+        messageElement.textContent = "Quiz is over!";
+        messageElement.appendChild(textElement);
+        textElement.textContent = "Your final score is: " + score;
+
+        renderForm();
       } else {
         renderQuestions(questionNumber);
       }
     });
   }
+}
+
+function renderForm() {
+  formElement.textContent = "Enter initials: ";
+  formButton.textContent = "Submit";
+  mainElement.appendChild(formElement);
+  formElement.appendChild(textInputElement);
+  formElement.appendChild(formButton);
 }
 
 startButton.addEventListener("click", startQuiz);

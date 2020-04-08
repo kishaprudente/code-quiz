@@ -21,9 +21,9 @@ ul {
 }
 
 button {
-  padding: 10px;
+  padding: 5px;
   border-radius: 4px;
-  font-size: medium;
+  font-size: 15px;
   background-color: purple;
   color: white;
 }
@@ -32,10 +32,21 @@ ul {
   list-style: none;
 }
 
+li {
+  padding: 10px;
+  margin: 10px;
+  font-size: 23px;
+  background-color: rebeccapurple;
+}
+
 #highscore-views {
   float: left;
 }
 
 #timer-view {
   float: right;
+}
+
+#hide {
+  display: none;
 }
