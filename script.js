@@ -54,6 +54,7 @@ var secondsLeft;
 var timerInterval;
 var message = "Coding Quiz Challenge";
 var score;
+var initials = "";
 
 init();
 
@@ -130,4 +131,10 @@ function renderForm() {
   formElement.appendChild(formButton);
 }
 
+function submitInitials() {
+  var initialInput = document.querySelector("input").value;
+  localStorage.setItem("Initials", initialInput);
+}
+
 startButton.addEventListener("click", startQuiz);
+formButton.addEventListener("click", submitInitials);
