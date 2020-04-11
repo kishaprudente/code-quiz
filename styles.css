@@ -47,6 +47,7 @@ li {
   float: right;
 }
 
-#hide {
-  display: none;
+#indicator {
+  font-style: italic;
+  font-size: 25px;
 }

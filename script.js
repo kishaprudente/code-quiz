@@ -5,6 +5,7 @@ var mainElement = document.querySelector("#main-content");
 var textElement = document.querySelector("p");
 var choicesListElement = document.querySelector("#choices-list");
 var indicatorElement = document.querySelector("#indicator");
+var nextButton = document.createElement("button");
 var formElement = document.createElement("div");
 var textInputElement = document.createElement("input");
 var formButton = document.createElement("button");
@@ -59,8 +60,9 @@ var initials = "";
 init();
 
 function init() {
-  secondsLeft = 60;
+  secondsLeft = 30;
   messageElement.innerHTML = message;
+  secsElement.textContent = 30;
   score = 0;
 }
 
@@ -101,23 +103,33 @@ function renderQuestions(questionNumber) {
         parseInt(event.target.getAttribute("data-index"))
       ) {
         score += 10;
+        indicatorElement.innerHTML = "<hr> Correct!";
+        indicatorElement.setAttribute("style", "color: green");
         console.log("correct");
       } else {
         secondsLeft -= 5;
+        indicatorElement.innerHTML = "<hr> Wrong!";
+        indicatorElement.setAttribute("style", "color: red");
         console.log("wrong");
       }
+
       questionNumber++;
-      newChoices.remove();
 
       if (questionNumber === questions.length) {
         clearInterval(timerInterval);
+        indicatorElement.textContent = "";
+        newChoices.remove();
         messageElement.textContent = "Quiz is over!";
         messageElement.appendChild(textElement);
         textElement.textContent = "Your final score is: " + score;
 
         renderForm();
       } else {
-        renderQuestions(questionNumber);
+        setTimeout(function () {
+          renderQuestions(questionNumber);
+          newChoices.remove();
+          indicatorElement.textContent = "";
+        }, 1000);
       }
     });
   }
