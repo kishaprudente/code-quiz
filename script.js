@@ -7,7 +7,7 @@ var textElement = document.querySelector("p");
 var choicesListElement = document.querySelector("#choices-list");
 var indicatorElement = document.querySelector("#indicator");
 var timerView = document.querySelector("#timer-view");
-var highScoreView = document.querySelector("a");
+var highScoreView = document.querySelector("#highscore-views");
 var nextButton = document.createElement("button");
 var formElement = document.createElement("div");
 var highscoresElement = document.createElement("div");
@@ -185,6 +185,12 @@ function clear() {
 function back() {
   location.reload();
 }
+
+highScoreView.addEventListener("click", function () {
+  textElement.remove();
+  startButton.remove();
+  renderHighscores();
+});
 
 startButton.addEventListener("click", startQuiz);
 formButton.addEventListener("click", submitHighscore);
