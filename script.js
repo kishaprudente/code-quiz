@@ -2,13 +2,19 @@ var secsElement = document.querySelector("#secs");
 var startButton = document.querySelector("#start-quiz");
 var messageElement = document.querySelector("h1");
 var mainElement = document.querySelector("#main-content");
+var body = document.querySelector("body");
 var textElement = document.querySelector("p");
 var choicesListElement = document.querySelector("#choices-list");
 var indicatorElement = document.querySelector("#indicator");
+var timerView = document.querySelector("#timer-view");
+var highScoreView = document.querySelector("a");
 var nextButton = document.createElement("button");
 var formElement = document.createElement("div");
+var highscoresElement = document.createElement("div");
 var textInputElement = document.createElement("input");
 var formButton = document.createElement("button");
+var backButton = document.createElement("button");
+var clearButton = document.createElement("button");
 
 var questions = [
   {
@@ -51,18 +57,20 @@ var questions = [
   },
 ];
 
+var highscore = {
+  initials: "",
+  score: 0,
+};
+var highscores = [];
 var secondsLeft;
 var timerInterval;
-var message = "Coding Quiz Challenge";
-var score;
-var initials = "";
+// var score;
+// var initials = "";
 
 init();
 
 function init() {
   secondsLeft = 30;
-  messageElement.innerHTML = message;
-  secsElement.textContent = 30;
   score = 0;
 }
 
@@ -105,12 +113,10 @@ function renderQuestions(questionNumber) {
         score += 10;
         indicatorElement.innerHTML = "<hr> Correct!";
         indicatorElement.setAttribute("style", "color: green");
-        console.log("correct");
       } else {
         secondsLeft -= 5;
         indicatorElement.innerHTML = "<hr> Wrong!";
         indicatorElement.setAttribute("style", "color: red");
-        console.log("wrong");
       }
 
       questionNumber++;
@@ -143,10 +149,44 @@ function renderForm() {
   formElement.appendChild(formButton);
 }
 
-function submitInitials() {
+function submitHighscore() {
   var initialInput = document.querySelector("input").value;
-  localStorage.setItem("Initials", initialInput);
+  highscore.initials = initialInput;
+  highscore.score = score;
+  console.log(highscore);
+  localStorage.setItem("highscore", JSON.stringify(highscore));
+  mainElement.innerHTML = "";
+  highScoreView.textContent = "";
+  timerView.textContent = "";
+
+  renderHighscores();
+}
+
+function renderHighscores() {
+  var storedHighscore = JSON.parse(localStorage.getItem("highscore"));
+  console.log(storedHighscore);
+  messageElement.innerHTML = "Highscores";
+  mainElement.appendChild(messageElement);
+  console.log(storedHighscore.initials);
+  console.log(storedHighscore.score);
+  highscoresElement.setAttribute("class", "highscore-element");
+  highscoresElement.textContent = `${storedHighscore.initials} - ${storedHighscore.score}`;
+  messageElement.appendChild(highscoresElement);
+  backButton.textContent = "Back";
+  clearButton.textContent = "Clear";
+  mainElement.appendChild(backButton);
+  mainElement.appendChild(clearButton);
+}
+
+function clear() {
+  highscoresElement.remove();
+}
+
+function back() {
+  location.reload();
 }
 
 startButton.addEventListener("click", startQuiz);
-formButton.addEventListener("click", submitInitials);
+formButton.addEventListener("click", submitHighscore);
+backButton.addEventListener("click", back);
+clearButton.addEventListener("click", clear);

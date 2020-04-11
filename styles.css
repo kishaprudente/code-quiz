@@ -51,3 +51,13 @@ li {
   font-style: italic;
   font-size: 25px;
 }
+
+.highscore-element {
+  font-size: 18px;
+  text-align: left;
+  color: white;
+  padding: 10px;
+  margin: 10px;
+  padding-left: 30px;
+  background-color: rebeccapurple;
+}
